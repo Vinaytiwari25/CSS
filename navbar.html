@@ -19,6 +19,11 @@
             align-items: center;
             background: #333;
             padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
         .navbar .logo {
             color: white;
@@ -65,23 +70,49 @@
                 display: block;
             }
         }
+        section {
+            height: 100vh;
+            padding-top: 80px;
+        }
     </style>
     <script>
         function toggleMenu() {
             document.querySelector('.navbar ul').classList.toggle('active');
         }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const links = document.querySelectorAll(".navbar ul li a");
+            links.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute("href").substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 60,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+        });
     </script>
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="logo">Brand</a>
+        <a href="#home" class="logo">Brand</a>
         <span class="menu-toggle" onclick="toggleMenu()">&#9776;</span>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
+    
+    <section id="home">Home Section</section>
+    <section id="about">About Section</section>
+    <section id="services">Services Section</section>
+    <section id="contact">Contact Section</section>
 </body>
 </html>
