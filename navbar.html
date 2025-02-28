@@ -12,6 +12,7 @@
         }
         body {
             font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
         }
         .navbar {
             display: flex;
@@ -42,8 +43,9 @@
             color: white;
             text-decoration: none;
             font-size: 18px;
+            transition: color 0.3s;
         }
-        .navbar ul li a:hover {
+        .navbar ul li a:hover, .navbar ul li a.active {
             color: #ffcc00;
         }
         .menu-toggle {
@@ -82,6 +84,18 @@
         
         document.addEventListener("DOMContentLoaded", function() {
             const links = document.querySelectorAll(".navbar ul li a");
+            
+            function updateActiveLink() {
+                let scrollPosition = window.scrollY;
+                links.forEach(link => {
+                    let section = document.querySelector(link.getAttribute("href"));
+                    if (section.offsetTop - 70 <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
+                        links.forEach(l => l.classList.remove("active"));
+                        link.classList.add("active");
+                    }
+                });
+            }
+            
             links.forEach(link => {
                 link.addEventListener("click", function(event) {
                     event.preventDefault();
@@ -93,8 +107,11 @@
                             behavior: "smooth"
                         });
                     }
+                    document.querySelector('.navbar ul').classList.remove('active');
                 });
             });
+            
+            window.addEventListener("scroll", updateActiveLink);
         });
     </script>
 </head>
@@ -103,7 +120,7 @@
         <a href="#home" class="logo">Brand</a>
         <span class="menu-toggle" onclick="toggleMenu()">&#9776;</span>
         <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="#home" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact</a></li>
