@@ -1,208 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Navbar</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            scroll-behavior: smooth;
-            background: #f4f4f4;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #333;
-            padding: 15px 20px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            transition: background 0.3s;
-        }
-        .navbar.scrolled {
-            background: rgba(51, 51, 51, 0.9);
-        }
-        .navbar .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .navbar ul {
-            list-style: none;
-            display: flex;
-        }
-        .navbar ul li {
-            margin: 0 15px;
-        }
-        .navbar ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-        .navbar ul li a:hover,
-        .navbar ul li a.active {
-            color: #ffcc00;
-        }
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .navbar ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                background: #333;
-                width: 100%;
-                text-align: center;
-            }
-            .navbar ul.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-            }
-        }
-        section {
-            height: 100vh;
-            padding-top: 80px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Navbar</title>
+  <style>
+    :root {
+      --bg-dark: #333;
+      --bg-dark-translucent: rgba(51, 51, 51, 0.9);
+      --highlight: #ffcc00;
+      --text-light: #fff;
+    }
 
-        /* Scroll to top button */
-        #scrollTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: none;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001;
-            transition: background 0.3s;
-        }
-        #scrollTopBtn:hover {
-            background-color: #555;
-        }
-    </style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+      background: #f4f4f4;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-dark);
+      padding: 15px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: var(--bg-dark-translucent);
+    }
+
+    .logo {
+      color: var(--text-light);
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: var(--highlight);
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      color: var(--text-light);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: var(--bg-dark);
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+      }
+
+      nav ul.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section {
+      height: 100vh;
+      padding-top: 80px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Scroll to top button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: none;
+      background-color: var(--bg-dark);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1001;
+      transition: background 0.3s;
+    }
+
+    #scrollTopBtn:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#home" class="logo">Brand</a>
-        <span class="menu-toggle" onclick="toggleMenu()">&#9776;</span>
-        <ul>
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
 
-    <section id="home">Home Section</section>
-    <section id="about">About Section</section>
-    <section id="services">Services Section</section>
-    <section id="contact">Contact Section</section>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#home" class="logo">Brand</a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">&#9776;</button>
+    <ul id="navbar-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-    <button id="scrollTopBtn" title="Go to top">↑</button>
+  <section id="home">Home Section</section>
+  <section id="about">About Section</section>
+  <section id="services">Services Section</section>
+  <section id="contact">Contact Section</section>
 
-    <script>
-        function toggleMenu() {
-            document.querySelector('.navbar ul').classList.toggle('active');
-        }
+  <button id="scrollTopBtn" title="Go to top">↑</button>
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const links = document.querySelectorAll(".navbar ul li a");
-            const logo = document.querySelector(".navbar .logo");
-            const navbar = document.querySelector(".navbar");
-            const scrollTopBtn = document.getElementById("scrollTopBtn");
+  <script>
+    function toggleMenu() {
+      document.getElementById("navbar-links").classList.toggle("active");
+    }
 
-            function updateActiveLink() {
-                let scrollPosition = window.scrollY;
-                links.forEach(link => {
-                    let section = document.querySelector(link.getAttribute("href"));
-                    if (section.offsetTop - 70 <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
-                        links.forEach(l => l.classList.remove("active"));
-                        link.classList.add("active");
-                    }
-                });
-            }
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll(".navbar ul li a");
+      const logo = document.querySelector(".navbar .logo");
+      const navbar = document.querySelector(".navbar");
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-            function updateNavbarBackground() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add("scrolled");
-                } else {
-                    navbar.classList.remove("scrolled");
-                }
-            }
-
-            function toggleScrollTopBtn() {
-                scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
-            }
-
-            links.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const targetId = this.getAttribute("href").substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 60,
-                            behavior: "smooth"
-                        });
-                    }
-                    document.querySelector('.navbar ul').classList.remove('active');
-                });
-            });
-
-            logo.addEventListener("click", function (event) {
-                event.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                links.forEach(link => link.classList.remove("active"));
-                document.querySelector("a[href='#home']").classList.add("active");
-                document.querySelector('.navbar ul').classList.remove('active');
-            });
-
-            window.addEventListener("scroll", () => {
-                updateActiveLink();
-                updateNavbarBackground();
-                toggleScrollTopBtn();
-            });
-
-            // Close mobile menu on outside click
-            document.addEventListener("click", function (event) {
-                const nav = document.querySelector(".navbar ul");
-                const toggle = document.querySelector(".menu-toggle");
-                if (!nav.contains(event.target) && !toggle.contains(event.target)) {
-                    nav.classList.remove("active");
-                }
-            });
-
-            // Scroll to top button click
-            scrollTopBtn.addEventListener("click", function () {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            });
+      function updateActiveLink() {
+        let scrollPosition = window.scrollY;
+        links.forEach(link => {
+          const section = document.querySelector(link.getAttribute("href"));
+          if (
+            section.offsetTop - 80 <= scrollPosition &&
+            section.offsetTop + section.offsetHeight > scrollPosition
+          ) {
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
         });
-    </script>
+      }
+
+      function updateNavbarBackground() {
+        navbar.classList.toggle("scrolled", window.scrollY > 50);
+      }
+
+      function toggleScrollTopBtn() {
+        scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+      }
+
+      links.forEach(link => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 60,
+              behavior: "smooth"
+            });
+          }
+          document.getElementById("navbar-links").classList.remove("active");
+        });
+      });
+
+      logo.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        links.forEach(link => link.classList.remove("active"));
+        document.querySelector("a[href='#home']").classList.add("active");
+        document.getElementById("navbar-links").classList.remove("active");
+      });
+
+      window.addEventListener("scroll", () => {
+        updateActiveLink();
+        updateNavbarBackground();
+        toggleScrollTopBtn();
+      });
+
+      // Outside click
+      document.addEventListener("click", function (event) {
+        const nav = document.getElementById("navbar-links");
+        const toggle = document.querySelector(".menu-toggle");
+        if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+          nav.classList.remove("active");
+        }
+      });
+
+      // Scroll to top
+      scrollTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  </script>
 </body>
 </html>
