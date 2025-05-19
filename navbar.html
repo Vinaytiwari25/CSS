@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Responsive Navbar</title>
+  <title>Enhanced Responsive Navbar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --bg-dark: #333;
@@ -19,7 +20,7 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       scroll-behavior: smooth;
       background: #f4f4f4;
     }
@@ -35,18 +36,25 @@
       top: 0;
       left: 0;
       z-index: 1000;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
 
     .navbar.scrolled {
       background: var(--bg-dark-translucent);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .logo {
       color: var(--text-light);
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
       text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      color: var(--highlight);
     }
 
     nav ul {
@@ -103,25 +111,24 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     section {
-      height: 100vh;
-      padding-top: 80px;
+      min-height: 100vh;
+      padding: 100px 20px 40px;
       text-align: center;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
+      background: linear-gradient(135deg, #e8e8e8, #fff);
+      transition: all 0.3s ease;
     }
 
-    /* Scroll to top button */
+    section:nth-child(even) {
+      background: linear-gradient(135deg, #dcdcdc, #f0f0f0);
+    }
+
     #scrollTopBtn {
       position: fixed;
       bottom: 30px;
@@ -131,8 +138,8 @@
       color: white;
       border: none;
       padding: 10px 15px;
-      font-size: 18px;
-      border-radius: 5px;
+      font-size: 20px;
+      border-radius: 50%;
       cursor: pointer;
       z-index: 1001;
       transition: background 0.3s;
@@ -146,8 +153,10 @@
 <body>
 
   <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <a href="#home" class="logo">Brand</a>
-    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">&#9776;</button>
+    <a href="#home" class="logo"><i class="fas fa-feather-alt"></i> Brand</a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+      <i class="fas fa-bars"></i>
+    </button>
     <ul id="navbar-links">
       <li><a href="#home" class="active">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -156,12 +165,12 @@
     </ul>
   </nav>
 
-  <section id="home">Home Section</section>
-  <section id="about">About Section</section>
-  <section id="services">Services Section</section>
-  <section id="contact">Contact Section</section>
+  <section id="home">Welcome to the Home Section</section>
+  <section id="about">Learn More About Us</section>
+  <section id="services">Explore Our Services</section>
+  <section id="contact">Get in Touch with Us</section>
 
-  <button id="scrollTopBtn" title="Go to top">↑</button>
+  <button id="scrollTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
   <script>
     function toggleMenu() {
@@ -179,7 +188,7 @@
         links.forEach(link => {
           const section = document.querySelector(link.getAttribute("href"));
           if (
-            section.offsetTop - 80 <= scrollPosition &&
+            section.offsetTop - 100 <= scrollPosition &&
             section.offsetTop + section.offsetHeight > scrollPosition
           ) {
             links.forEach(l => l.classList.remove("active"));
@@ -203,7 +212,7 @@
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
             window.scrollTo({
-              top: targetElement.offsetTop - 60,
+              top: targetElement.offsetTop - 70,
               behavior: "smooth"
             });
           }
@@ -225,7 +234,6 @@
         toggleScrollTopBtn();
       });
 
-      // Outside click
       document.addEventListener("click", function (event) {
         const nav = document.getElementById("navbar-links");
         const toggle = document.querySelector(".menu-toggle");
@@ -234,11 +242,11 @@
         }
       });
 
-      // Scroll to top
       scrollTopBtn.addEventListener("click", function () {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
   </script>
+
 </body>
 </html>
